@@ -1,0 +1,50 @@
+name: Smoke test pipeline
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  pipeline:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run preprocess
+        run: python src/preprocess.py
+
+      - name: Train Contrastive (5 epochs - smoke)
+        run: python src/train_contrastive.py --epochs 5 --batch 256
+
+      - name: Train baselines (5 epochs - smoke)
+        run: python src/train_baseline.py --epochs 5 --batch 256
+
+      - name: Evaluate
+        run: python src/evaluate.py
+
+      - name: Plot loss
+        run: python src/plot_loss.py
+
+      - name: Upload generated figs
+        uses: actions/upload-artifact@v4
+        with:
+          name: figs-and-results
+          path: |
+            figs/
+            outputs/results.csv
+            outputs/per_attack_auc.csv

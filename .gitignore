@@ -1,0 +1,23 @@
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+env/
+
+# Generated artefacts (sinh tự động khi chạy pipeline)
+data/processed/
+outputs/*.pt
+outputs/*.npy
+outputs/*.joblib
+outputs/*.csv
+figs/*.png
+
+# IDE
+.vscode/
+.idea/
+*.swp
+.DS_Store
+
+# Jupyter
+.ipynb_checkpoints/
