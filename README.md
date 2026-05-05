@@ -12,7 +12,7 @@ thời gian thực**.
 > schema CICIDS-2017 để bạn clone về chạy demo ngay lập tức không cần tải
 > CICIDS thật.
 
-## Quick start (Ubuntu)
+## ⚡ Quick start — chỉ 1 lệnh (Ubuntu, có giao diện web)
 
 ```bash
 git clone https://github.com/phuonglatoi/zd-ssl-detection.git
@@ -20,6 +20,24 @@ cd zd-ssl-detection
 python3 -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
 
+# 🎨 Dashboard Streamlit — chạy 1 lệnh, mở trình duyệt tự động
+streamlit run app.py
+```
+
+Browser sẽ tự mở `http://localhost:8501` với 5 tab:
+1. **🚀 Chạy pipeline** – 5 nút bấm + nút "Chạy toàn bộ", live log streaming
+2. **📈 Kết quả** – metric card AUC/FPR/TPR cho 3 mô hình + bảng per-attack
+3. **📊 Biểu đồ** – ROC, UMAP, Confusion matrix, training loss, score distribution
+4. **🌊 Streaming** – mô phỏng realtime với throughput, latency, ALERT counter live
+5. **ℹ️ Thông tin** – kiến trúc + tài liệu tham khảo
+
+![Dashboard home](docs/dashboard_home.png)
+![Dashboard results](docs/dashboard_results.png)
+![Dashboard figures](docs/dashboard_figs.png)
+
+## Quick start — chế độ CLI (không cần giao diện)
+
+```bash
 # Synthetic dataset đã có sẵn trong data/raw/, chạy luôn:
 python src/preprocess.py
 python src/train_contrastive.py --epochs 20 --batch 256
